@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fadein/flutter_fadein.dart';
+import 'draggable_scrollbar.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -447,10 +448,16 @@ class MyHomePage extends StatelessWidget {
       )
     ];
     return Scaffold(
-        body: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              return items[index];
-            }));
+      body: DraggableScrollbar(
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return items[index];
+          },
+        ),
+        heightScrollThumb: size.height / 6,
+        controller: controller,
+      ),
+    );
   }
 }
